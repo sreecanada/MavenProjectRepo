@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven 3.6.3'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build maven project') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t testdemo:latest .'
+            }
+        }
+        stage('Run Docker Container') {
+            steps {
+                sh 'docker run -d -p 8080:8080 testdemo:latest'
+            }
+        }
+    }
+}
