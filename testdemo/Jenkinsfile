@@ -13,12 +13,16 @@ pipeline {
         }
         stage('Build maven project') {
             steps {
-                bat 'mvn clean package'
+                directory('testdemo') {
+                    bat 'mvn clean package'
+                }
             }
         }
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t testdemo:latest .'
+                directory('testdemo') {
+                    bat 'docker build -t testdemo:latest .'
+                }
             }
         }
         stage('Run Docker Container') {
