@@ -13,14 +13,14 @@ pipeline {
         }
         stage('Build maven project') {
             steps {
-                Dir('testdemo') {
+                dir('testdemo') {
                     bat 'mvn clean package'
                 }
             }
         }
         stage('Build Docker Image') {
             steps {
-                Dir('testdemo') {
+                dir('testdemo') {
                     bat 'docker build -t testdemo:latest .'
                 }
             }
